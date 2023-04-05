@@ -1,8 +1,9 @@
-import SpaceXLaunches from "./Launches";
+import './App.css';
+import SpaceXLaunches from './Launches';
 function App() {
   return (
     <div>
-      <SpaceXLaunches/>
+      <SpaceXLaunches />
     </div>
   );
 }
