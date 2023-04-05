@@ -41,11 +41,11 @@ const SpaceXLaunches = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
+            <th>Image</th>
             <th>Flight Number</th>
             <th>Mission Name</th>
             <th>Launch Year</th>
             <th>Details</th>
-            <th>Image</th>
           </tr>
         </thead>
         <tbody>
@@ -56,10 +56,6 @@ const SpaceXLaunches = () => {
           ) : (
             filteredData.map((launch) => (
               <tr key={launch.id}>
-                <td>{launch.flight_number}</td>
-                <td>{launch.name}</td>
-                <td>{launch.date_utc}</td>
-                <td>{launch.details}</td>
                 <td>
                   <img
                     src={launch.links.patch.small}
@@ -67,6 +63,10 @@ const SpaceXLaunches = () => {
                     width="100px"
                   />
                 </td>
+                <td>{launch.flight_number}</td>
+                <td>{launch.name}</td>
+                <td>{launch.date_utc}</td>
+                <td>{launch.details}</td>
               </tr>
             ))
           )}
