@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Form, Table } from 'react-bootstrap';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
+import { Container, Form, Table, Spinner } from 'react-bootstrap';
+
+const SpaceXLaunchRow = lazy(() => import('./SpaceXLaunchRow'));
 
 const SpaceXLaunches = () => {
   const [data, setData] = useState([]);
@@ -26,10 +28,10 @@ const SpaceXLaunches = () => {
   );
 
   return (
-    <Container>
+    <Container className='p-5 m-5 border rounded border-3 mx-auto'>
       <Form>
-        <Form.Group controlId="formSearch">
-          <Form.Label>Search by mission name:</Form.Label>
+        <Form.Group controlId="formSearch" className='m-5'>
+          <Form.Label className='display-4'>Search by mission name:</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter mission name"
@@ -48,26 +50,20 @@ const SpaceXLaunches = () => {
             <th>Details</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='p-5'>
           {isLoading ? (
             <tr>
-              <td colSpan="5">Loading...</td>
+              <td colSpan="5">
+              <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </td>
             </tr>
           ) : (
             filteredData.map((launch) => (
-              <tr key={launch.id}>
-                <td>
-                  <img
-                    src={launch.links.patch.small}
-                    alt={`Mission patch for ${launch.name}`}
-                    width="100px"
-                  />
-                </td>
-                <td>{launch.flight_number}</td>
-                <td>{launch.name}</td>
-                <td>{launch.date_utc}</td>
-                <td>{launch.details}</td>
-              </tr>
+              <Suspense key={launch.id} fallback={<tr><td>Loading...</td></tr>}>
+                <SpaceXLaunchRow launch={launch} />
+              </Suspense>
             ))
           )}
         </tbody>
