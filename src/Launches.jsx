@@ -28,10 +28,10 @@ const SpaceXLaunches = () => {
   );
 
   return (
-    <Container className='p-5 m-5 border rounded border-3 mx-auto'>
+    <Container className="p-5 m-5 border rounded border-3 mx-auto">
       <Form>
-        <Form.Group controlId="formSearch" className='m-5'>
-          <Form.Label className='display-4'>Search by mission name:</Form.Label>
+        <Form.Group controlId="formSearch" className="m-5">
+          <Form.Label className="display-5">Search by mission name:</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter mission name"
@@ -40,7 +40,7 @@ const SpaceXLaunches = () => {
           />
         </Form.Group>
       </Form>
-      <Table striped bordered hover>
+      <Table striped bordered hover className='border rounded border-3'>
         <thead>
           <tr>
             <th>Image</th>
@@ -50,18 +50,29 @@ const SpaceXLaunches = () => {
             <th>Details</th>
           </tr>
         </thead>
-        <tbody className='p-5'>
+        <tbody className="p-5">
           {isLoading ? (
             <tr>
               <td colSpan="5">
-              <Spinner animation="border" role="status">
+                <Spinner animation="border" role="status">
                   <span className="visually-hidden">Loading...</span>
                 </Spinner>
               </td>
             </tr>
           ) : (
             filteredData.map((launch) => (
-              <Suspense key={launch.id} fallback={<tr><td>Loading...</td></tr>}>
+              <Suspense
+                key={launch.id}
+                fallback={
+                  <tr>
+                    <td>
+                      <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </Spinner>
+                    </td>
+                  </tr>
+                }
+              >
                 <SpaceXLaunchRow launch={launch} />
               </Suspense>
             ))
