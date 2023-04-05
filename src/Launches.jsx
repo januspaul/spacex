@@ -60,22 +60,33 @@ const SpaceXLaunches = () => {
               </td>
             </tr>
           ) : (
-            filteredData.map((launch) => (
-              <Suspense
-                key={launch.id}
-                fallback={
-                  <tr>
-                    <td>
-                      <Spinner animation="border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                      </Spinner>
-                    </td>
-                  </tr>
-                }
-              >
-                <SpaceXLaunchRow launch={launch} />
-              </Suspense>
-            ))
+            filteredData.length > 0 ? (
+              filteredData.map((launch) => (
+                <Suspense
+                  key={launch.id}
+                  fallback={
+                    <tr>
+                      <td>
+                        <Spinner animation="border" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                      </td>
+                    </tr>
+                  }
+                >
+                  <SpaceXLaunchRow launch={launch} />
+                </Suspense>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5">No matching launches found.</td>
+              </tr>
+            )
+          )}
+          {filteredData.length === data.length && (
+            <tr>
+              <td colSpan="5" className='text-center display-5'>No more data to load.</td>
+            </tr>
           )}
         </tbody>
       </Table>
